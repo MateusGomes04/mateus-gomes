@@ -38,4 +38,16 @@ RSpec.describe User, type: :model do
       expect(User.by_email(nil)).to include(user1, user2)
     end
   end
+  
+  describe '.find_by_username' do
+    let!(:user) { create(:user, username: 'taylor') }
+
+    it 'returns the user with the given username' do
+      expect(User.find_by_username('taylor')).to eq(user)
+    end
+
+    it 'returns nil if no user with the given username exists' do
+      expect(User.find_by_username('nonexistent')).to be_nil
+    end
+  end
 end
