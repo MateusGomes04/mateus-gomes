@@ -1,6 +1,12 @@
 class User < ApplicationRecord
   belongs_to :company
   has_many :tweets
+  before_create :generate_confirmation_token
+  after_create :send_confirmation_email
+  has_secure_password
+
+  validates :password, presence: true, confirmation: true, on: :create
+  validates :password_confirmation, presence: true, on: :create
 
   scope :by_company, ->(company_id) { company_id.present? ? where(company_id: company_id) : all }
   scope :by_username, ->(username) { username.present? ? where('username LIKE ?', "%#{username}%") : all }
@@ -9,5 +15,17 @@ class User < ApplicationRecord
 
   def self.find_by_username(username)
     find_by(username: username)
+  end
+
+  def confirmed?
+    confirmed
+  end
+
+  def generate_confirmation_token
+    self.confirmation_token = SecureRandom.urlsafe_base64
+  end
+
+  def send_confirmation_email
+    UserMailer.with(user: self).confirmation_email.deliver_now
   end
 end
