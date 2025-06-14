@@ -1,0 +1,5 @@
+<% if @tweets.any? %>
+  $("#tweets-container").append("<%= j render(@tweets) %>");
+<% else %>
+  <script> endOfTweets = true; </script>
+<% end %>

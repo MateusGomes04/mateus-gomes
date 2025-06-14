@@ -1,0 +1,54 @@
+<div class="container py-4">
+  <h1 class="mb-4 text-center text-primary fw-bold">Feed de Tweets</h1>
+
+  <div id="tweets-container" class="d-flex flex-column gap-3">
+    <%= render @tweets %>
+  </div>
+
+  <div id="loading" class="text-center my-4" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'https://code.jquery.com/jquery-3.6.0.min.js' %>
+
+<script>
+  $(document).ready(function() {
+    let loading = false;
+    let endOfTweets = false;
+
+    function loadMoreTweets() {
+      if (loading || endOfTweets) return;
+
+      loading = true;
+      $('#loading').show();
+
+      const lastId = $('.tweet').last().data('id');
+
+      $.ajax({
+        url: "<%= tweets_path(format: :js) %>",
+        data: {
+          last_id: lastId
+        },
+        dataType: 'script',
+        success: function() {
+          setTimeout(function() {
+            loading = false;
+            $('#loading').hide();
+          }, 3000);
+        },
+        error: function() {
+          loading = false;
+          $('#loading').hide();
+        }
+      });
+    }
+
+    $(window).on('scroll', function() {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        loadMoreTweets();
+      }
+    });
+  });
+</script>

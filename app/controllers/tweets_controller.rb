@@ -4,12 +4,20 @@ class TweetsController < ApplicationController
       user = User.find_by_username(params[:user_username])
       return render(json: { error: "User not found" }, status: :not_found) unless user
 
-      tweets = Tweet.by_user(user.id).recent
-      return render(json: { message: "User has no tweets" }) if tweets.empty?
+      base_scope = user.tweets.recent
     else
-      tweets = Tweet.recent
+      base_scope = Tweet.recent
     end
 
-    render json: tweets
+    if params[:last_id].present?
+      base_scope = base_scope.where("id < ?", params[:last_id])
+    end
+
+    @tweets = base_scope.limit(20)
+
+    respond_to do |format|
+      format.html # initial render
+      format.js   # AJAX load
+    end
   end
 end
