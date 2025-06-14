@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :companies, only: [] do
     resources :users, only: [:index]
   end
@@ -10,4 +9,11 @@ Rails.application.routes.draw do
     resources :tweets, only: [:index]
   end
 
+  get  '/signup', to: 'users#new', as: 'signup'
+  post '/signup', to: 'users#create'
+
+  get  '/confirm_email', to: 'users#confirm', as: 'confirm_users'
+  get '/confirmation_success', to: 'users#confirmation_success', as: :confirmation_success
+
+  root "users#new"
 end

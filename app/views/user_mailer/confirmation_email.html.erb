@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+  <h2>Olá, <%= @user.display_name || @user.username %>!</h2>
+  <p>Obrigado por se registrar em nosso site.</p>
+  <p>Por favor, confirme sua conta clicando no link abaixo:</p>
+  <p>
+    <a href="<%= @url %>" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+      Confirmar Conta
+    </a>
+  </p>
+  <p>Se você não criou esta conta, ignore este email.</p>
+  <hr>
+  <small>Este é um email automático, por favor não responda.</small>
+</body>
+
+</html>

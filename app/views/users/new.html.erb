@@ -1,0 +1,37 @@
+<h1>Cadastro de Usuário</h1>
+
+<%= form_with model: @user, url: signup_path, local: true do |f| %>
+<div>
+  <%= f.label :username %><br>
+  <%= f.text_field :username %>
+</div>
+
+<div>
+  <%= f.label :display_name %><br>
+  <%= f.text_field :display_name %>
+</div>
+
+<div>
+  <%= f.label :email %><br>
+  <%= f.email_field :email %>
+</div>
+
+<div>
+  <%= f.label :password %><br>
+  <%= f.password_field :password %>
+</div>
+
+<div>
+  <%= f.label :password_confirmation %><br>
+  <%= f.password_field :password_confirmation %>
+</div>
+
+<div>
+  <%= f.label :company_id %><br>
+  <%= f.number_field :company_id %>
+</div>
+
+<div>
+  <%= f.submit "Cadastrar" %>
+</div>
+<% end %>
