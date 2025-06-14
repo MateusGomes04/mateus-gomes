@@ -1,0 +1,15 @@
+<h1>Empresas</h1>
+
+<%= link_to "Nova Empresa", new_company_path %>
+
+<ul>
+  <% @companies.each do |company| %>
+  <li>
+    <%= company.name %>
+    <%= link_to "Editar", edit_company_path(company) %> |
+    <%= form_with url: company_path(company), method: :delete, local: true do %>
+    <%= submit_tag "Excluir", data: { confirm: "Tem certeza?" } %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>

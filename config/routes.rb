@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :companies, only: [] do
+  resources :companies do
     resources :users, only: [:index]
   end
 

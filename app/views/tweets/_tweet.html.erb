@@ -1,0 +1,12 @@
+<div class="card shadow-sm border-0 tweet" data-id="<%= tweet.id %>">
+  <div class="card-body">
+    <div class="d-flex justify-content-between mb-2">
+      <div>
+        <h5 class="card-title mb-0 text-dark"><%= tweet.user.display_name %></h5>
+        <h6 class="card-title mb-0 text-dark">@<%= tweet.user.username %></h6>
+      </div>
+      <small class="text-muted"><%= tweet.created_at.strftime("%d/%m/%Y %H:%M") %></small>
+    </div>
+    <p class="card-text text-body"><%= tweet.body %></p>
+  </div>
+</div>
