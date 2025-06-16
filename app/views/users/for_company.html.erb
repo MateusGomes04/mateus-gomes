@@ -1,0 +1,65 @@
+<div class="container py-4">
+  <h1 class="mb-4 text-center text-primary fw-bold">
+    Usuários da Empresa: <%= @company.name %>
+  </h1>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <%= link_to "Voltar", companies_path, class: "btn btn-secondary" %>
+
+    <div class="d-flex align-items-center gap-2">
+      <%= form_with url: company_users_list_path(@company), method: :get, local: true, class: "d-flex align-items-center gap-2" do |form| %>
+      <%= form.label :per_page, "Usuários por página:", class: "mb-0 fw-semibold" %>
+      <%= form.number_field :per_page, value: @per_page, min: 1, max: 100, class: "form-control form-control-sm", style: "width: 80px;" %>
+      <%= form.hidden_field :page, value: 1 %>
+      <%= form.submit "Atualizar", class: "btn btn-outline-primary btn-sm" %>
+      <% end %>
+
+      <%= link_to "Novo Usuário", new_user_path(company_id: @company.id), class: "btn btn-success" %>
+    </div>
+  </div>
+
+  <% if @users.any? %>
+  <ul class="list-group">
+    <% @users.each do |user| %>
+    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <strong><%= user.display_name %></strong> – @<%= user.username %><br>
+        <small class="text-muted"><%= user.email %></small>
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+        <span class="badge bg-info rounded-pill">ID: <%= user.id %></span>
+        <% if user.username.present? %>
+        <%= link_to "Ver Tweets", tweets_path(user_username: user.username), class: "btn btn-outline-primary btn-sm" %>
+        <% end %>
+      </div>
+    </li>
+    <% end %>
+  </ul>
+  <% else %>
+  <div class="alert alert-warning text-center mt-4">
+    Nenhum usuário cadastrado para esta empresa.
+  </div>
+  <% end %>
+
+  <% total_pages = (@total_users.to_f / @per_page).ceil %>
+  <% if total_pages > 1 %>
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+
+      <li class="page-item <%= 'disabled' if @page <= 1 %>">
+        <%= link_to "Anterior", company_users_list_path(@company, page: @page - 1, per_page: @per_page), class: "page-link" %>
+      </li>
+
+      <% (1..total_pages).each do |p| %>
+      <li class="page-item <%= 'active' if p == @page %>">
+        <%= link_to p, company_users_list_path(@company, page: p, per_page: @per_page), class: "page-link" %>
+      </li>
+      <% end %>
+
+      <li class="page-item <%= 'disabled' if @page >= total_pages %>">
+        <%= link_to "Próxima", company_users_list_path(@company, page: @page + 1, per_page: @per_page), class: "page-link" %>
+      </li>
+    </ul>
+  </nav>
+  <% end %>
+</div>

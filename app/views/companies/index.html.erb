@@ -1,15 +1,28 @@
-<h1>Empresas</h1>
+<div class="container py-4">
+  <h1 class="mb-4 text-center text-primary fw-bold">Empresas Cadastradas</h1>
 
-<%= link_to "Nova Empresa", new_company_path %>
+  <div class="d-flex justify-content-end mb-3">
+    <%= link_to "Nova Empresa", new_company_path, class: "btn btn-success" %>
+  </div>
 
-<ul>
-  <% @companies.each do |company| %>
-  <li>
-    <%= company.name %>
-    <%= link_to "Editar", edit_company_path(company) %> |
-    <%= form_with url: company_path(company), method: :delete, local: true do %>
-    <%= submit_tag "Excluir", data: { confirm: "Tem certeza?" } %>
+  <% if @companies.any? %>
+  <div class="list-group">
+    <% @companies.each do |company| %>
+    <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h5 class="mb-1"><%= company.name %></h5>
+      </div>
+      <div class="btn-group">
+        <%= link_to "Editar", edit_company_path(company), class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "Ver Usuários", company_users_list_path(company), class: "btn btn-outline-secondary btn-sm" %>
+        <%= form_with url: company_path(company), method: :delete, local: true, class: "d-inline" do %>
+        <%= submit_tag "Excluir", class: "btn btn-outline-danger btn-sm", data: { confirm: "Tem certeza que deseja excluir esta empresa?" } %>
+        <% end %>
+      </div>
+    </div>
     <% end %>
-  </li>
+  </div>
+  <% else %>
+  <div class="alert alert-info text-center">Nenhuma empresa cadastrada.</div>
   <% end %>
-</ul>
+</div>

@@ -37,6 +37,10 @@ group :development, :test do
   gem 'faker'
   gem 'rspec-rails', '~> 4.0.0'
   gem 'letter_opener'
+  group :test do
+  gem 'rails-controller-testing'
+end
+
 end
 
 group :development do

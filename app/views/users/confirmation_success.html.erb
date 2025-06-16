@@ -1,3 +1,13 @@
-<h1>Conta Confirmada com Sucesso!</h1>
-<p>Agora você já pode ver os tweets.</p>
-<%= link_to "Voltar", tweets_path %>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h2 class="text-success fw-bold mb-3">Conta Confirmada com Sucesso!</h2>
+          <p class="lead">Agora você já pode acessar os tweets.</p>
+          <%= link_to "Ver Tweets", tweets_path, class: "btn btn-primary mt-3 fw-bold" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,11 @@
 <% if @tweets.any? %>
   $("#tweets-container").append("<%= j render(@tweets) %>");
 <% else %>
-  <script> endOfTweets = true; </script>
+  endOfTweets = true;
+
+  if ($("#tweets-container").children().length === 0 || $("#tweets-container").hasClass('alert')) {
+    $("#tweets-container").html('<div class="alert alert-warning text-center">Nenhum tweet encontrado.</div>');
+  }
+
+  $("#back-to-top-container").show();
 <% end %>
