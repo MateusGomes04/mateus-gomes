@@ -23,7 +23,16 @@ RSpec.describe Tweet, type: :model do
         expect(Tweet.by_user(user.id)).to include(user_tweet)
         expect(Tweet.by_user(user.id)).not_to include(other_tweet)
       end
+
+      it 'returns all tweets if user_id is nil' do
+        tweets = create_list(:tweet, 3)
+        expect(Tweet.by_user(nil).count).to eq(3)
+      end
+
+      it 'returns all tweets if user_id is empty string' do
+        tweets = create_list(:tweet, 2)
+        expect(Tweet.by_user('').count).to eq(2)
+      end
     end
   end
 end
-

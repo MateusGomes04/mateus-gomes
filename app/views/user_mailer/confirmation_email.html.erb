@@ -1,18 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-  <h2>Olá, <%= @user.display_name || @user.username %>!</h2>
-  <p>Obrigado por se registrar em nosso site.</p>
-  <p>Por favor, confirme sua conta clicando no link abaixo:</p>
-  <p>
-    <a href="<%= @url %>" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-      Confirmar Conta
-    </a>
-  </p>
-  <p>Se você não criou esta conta, ignore este email.</p>
-  <hr>
-  <small>Este é um email automático, por favor não responda.</small>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmação de Conta</title>
+</head>
+
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding: 40px 0;">
+    <tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); padding: 30px;">
+          <tr>
+            <td align="center" style="padding-bottom: 20px;">
+              <h2 style="color: #007bff; margin: 0;">Confirmação de Conta</h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <p style="font-size: 16px; color: #333;">
+                Olá, <strong><%= @user.display_name || @user.username %></strong>!
+              </p>
+              <p style="font-size: 16px; color: #333;">
+                Obrigado por se registrar em nossa plataforma. Para ativar sua conta, por favor clique no botão abaixo:
+              </p>
+              <p style="text-align: center; margin: 30px 0;">
+                <a href="<%= @url %>" style="background-color: #007bff; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+                  Confirmar Conta
+                </a>
+              </p>
+              <p style="font-size: 14px; color: #666;">
+                Se você não criou esta conta, pode ignorar este e-mail com segurança.
+              </p>
+              <hr style="margin: 30px 0;" />
+              <p style="font-size: 12px; color: #999; text-align: center;">
+                Este é um e-mail automático, por favor não responda.<br />
+                &copy; <%= Time.current.year %> Sua Empresa. Todos os direitos reservados.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 
 </html>

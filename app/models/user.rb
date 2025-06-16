@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   belongs_to :company
-  has_many :tweets
+  has_many :tweets, dependent: :destroy
   before_create :generate_confirmation_token
-  after_create :send_confirmation_email
+  after_create :send_confirmation_email, if: -> { !confirmed? }
   has_secure_password
 
   validates :password, presence: true, confirmation: true, on: :create
@@ -12,13 +12,10 @@ class User < ApplicationRecord
   scope :by_username, ->(username) { username.present? ? where('username LIKE ?', "%#{username}%") : all }
   scope :by_display_name, ->(display_name) { display_name.present? ? where('display_name LIKE ?', "%#{display_name}%") : all }
   scope :by_email, ->(email) { email.present? ? where('email LIKE ?', "%#{email}%") : all }
+  scope :confirmed, -> { where(confirmed: true) }
 
   def self.find_by_username(username)
     find_by(username: username)
-  end
-
-  def confirmed?
-    confirmed
   end
 
   def generate_confirmation_token

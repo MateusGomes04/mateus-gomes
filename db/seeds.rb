@@ -8,10 +8,25 @@
 
 5.times do
   company = Company.create(name: Faker::Company.name)
+
   5.times do |index|
-    user = User.create(display_name: Faker::Name.name, email: Faker::Internet.email, username: "user_#{company.id}_#{index+1}", company_id: company.id)
+    user = User.create(
+      display_name: Faker::Name.name,
+      email: Faker::Internet.unique.email,
+      username: "user_#{company.id}_#{index + 1}",
+      password: "123456",
+      password_confirmation: "123456",
+      company_id: company.id,
+      confirmed: true,
+      confirmation_token: nil
+    )
+
     100.times do
-      Tweet.create(body: Faker::GreekPhilosophers.quote, user_id: user.id)
+      Tweet.create(
+        body: Faker::GreekPhilosophers.quote,
+        user_id: user.id
+      )
     end
   end
 end
+

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get  '/users/new', to: 'users#new', as: 'new_user'
+  post '/users',     to: 'users#create', as: 'create_user'
+
   resources :companies do
     resources :users, only: [:index]
   end
@@ -9,11 +12,10 @@ Rails.application.routes.draw do
     resources :tweets, only: [:index]
   end
 
-  get  '/signup', to: 'users#new', as: 'signup'
-  post '/signup', to: 'users#create'
+  get '/companies/:company_id/users_list', to: 'users#for_company', as: :company_users_list
 
   get  '/confirm_email', to: 'users#confirm', as: 'confirm_users'
   get '/confirmation_success', to: 'users#confirmation_success', as: :confirmation_success
 
-  root "users#new"
+  root "companies#index"
 end
